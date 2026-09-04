@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hanap College | Find Your College</title>
+
+<style>
+:root {
+    --primary: #7b3fb5;
+    --primary-dark: #54247e;
+    --secondary: #f4e9ff;
+    --accent: #ffca28;
+    --white: #ffffff;
+    --text: #333;
+    --muted: #777;
+    --card: #fff;
+    --border: #ddd;
+    --shadow: 0 5px 20px rgba(0,0,0,.12);
+}
+
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--secondary);
+    color: var(--text);
+    transition: .3s;
+}
+
+body.dark {
+    --secondary: #17121d;
+    --white: #211a29;
+    --text: #eee;
+    --muted: #bbb;
+    --card: #261e2e;
+    --border: #45364e;
+    --shadow: 0 5px 20px rgba(0,0,0,.35);
+}
+
+header {
+    background: linear-gradient(135deg, #7b3fb5, #54247e);
+    color: white;
+    text-align: center;
+    padding: 55px 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 42px;
+}
+
+header p {
+    font-size: 18px;
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--primary-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 12px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 6px 14px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #e3c7ff;
+}
+
+.nav-buttons button {
+    margin-left: 5px;
+    padding: 8px 12px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 0;
+}
+
+section {
+    padding: 35px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.hero h2 {
+    font-size: 36px;
+    color: var(--primary);
+}
+
+.hero p {
+    max-width: 700px;
+    margin: auto;
+    color: var(--muted);
+    font-size: 17px;
+}
+
+.hero-buttons {
+    margin-top: 25px;
+}
+
+button,
+.btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 11px 17px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover,
+.btn:hover {
+    background: var(--primary-dark);
+}
+
+.btn-secondary {
+    background: #555;
+}
+
+.btn-danger {
+    background: #d9534f;
+}
+
+.btn-success {
+    background: #198754;
+}
+
+.search-box {
+    background: var(--card);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+.filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text);
+    border-radius: 7px;
+    margin: 5px 0;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+#collegeList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 20px;
+}
+
+.college {
+    background: var(--card);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: .25s;
+}
+
+.college:hover {
+    transform: translateY(-5px);
+}
+
+.college-img {
+    height: 190px;
+    background: linear-gradient(135deg, #e9d5ff, #c9a8e8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.college-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder {
+    text-align: center;
+    color: var(--primary-dark);
+    font-weight: bold;
+    padding: 20px;
+}
+
+.college-info {
+    padding: 20px;
+}
+
+.college-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.college-header h3 {
+    color: var(--primary);
+    margin: 0;
+}
+
+.college-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.rating {
+    color: #f5b301;
+    font-weight: bold;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+.tag {
+    background: #ead7fa;
+    color: var(--primary-dark);
+    padding: 5px 9px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 15px;
+}
+
+.favorite {
+    background: #e91e63;
+}
+
+.favorite.active {
+    background: #b0003a;
+}
+
+.compare-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--primary-dark);
+    color: white;
+    padding: 15px;
+    z-index: 2000;
+    display: none;
+    text-align: center;
+}
+
+.compare-bar button {
+    margin-left: 10px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 3000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.7);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background: var(--card);
+    color: var(--text);
+    width: 90%;
+    max-width: 700px;
+    margin: 6% auto;
+    padding: 30px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.about-card {
+    background: var(--card);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.login-box {
+    max-width: 500px;
+    margin: auto;
+    background: var(--card);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+footer {
+    background: #32154d;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    margin-top: 30px;
+}
+
+footer a {
+    color: white;
+}
+
+@media(max-width:600px) {
+    header h1 {
+        font-size: 30px;
+    }
+
+    .hero h2 {
+        font-size: 28px;
+    }
+
+    nav a {
+        margin: 5px 7px;
+        font-size: 14px;
+    }
+
+    #collegeList {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header id="home">
+    <h1>Hanap College</h1>
+    <p>Find the college that's right for you!</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#colleges">Colleges</a>
+    <a href="#courses">Courses</a>
+    <a href="#favorites">Favorites</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+
+    <span class="nav-buttons">
+        <button onclick="toggleDarkMode()">Toggle Theme</button>
+        <button onclick="openLogin()">Login</button>
+    </span>
+</nav>
+
+<section class="hero">
+    <h2>Find Your Future College</h2>
+
+    <p>
+        Explore colleges around Bulacan and nearby areas.
+        Compare schools, courses, tuition, ratings, and more.
+    </p>
+
+    <div class="hero-buttons">
+        <a href="#colleges" class="btn">Explore Colleges</a>
+        <a href="#courses" class="btn btn-secondary">Find My Course</a>
+    </div>
+</section>
+
+<div class="container">
+
+<section id="colleges">
+
+<h2 class="section-title">Search & Filter Colleges</h2>
+
+<div class="search-box">
+
+<div class="filters">
+
+<input
+    type="text"
+    id="searchInput"
+    placeholder="Search college..."
+    oninput="applyFilters()"
+>
+
+<select id="courseFilter" onchange="applyFilters()">
+    <option value="">All Courses</option>
+    <option value="IT">Information Technology / CS</option>
+    <option value="Business">Business / Accounting</option>
+    <option value="Engineering">Engineering</option>
+    <option value="Education">Teacher Education</option>
+    <option value="Agriculture">Agriculture</option>
+</select>
+
+<select id="locationFilter" onchange="applyFilters()">
+    <option value="">All Locations</option>
+    <option value="San Jose del Monte">San Jose del Monte</option>
+    <option value="Bulacan">Bulacan</option>
+    <option value="Manila">Manila</option>
+    <option value="Malolos">Malolos</option>
+    <option value="Fairview">Fairview</option>
+    <option value="Taytay">Taytay</option>
+</select>
+
+<select id="tuitionFilter" onchange="applyFilters()">
+    <option value="">Any Tuition</option>
+    <option value="free">Free Tuition</option>
+    <option value="low">₱0 - ₱10,000</option>
+    <option value="medium">₱10,001 - ₱20,000</option>
+    <option value="high">₱20,001+</option>
+</select>
+
+<select id="sortFilter" onchange="applyFilters()">
+    <option value="">Sort By</option>
+    <option value="rating">Highest Rating</option>
+    <option value="tuitionLow">Lowest Tuition</option>
+    <option value="name">Name A-Z</option>
+</select>
+
+</div>
+
+<br>
+
+<button onclick="resetFilters()">Reset Filters</button>
+
+</div>
+
+<div id="collegeList"></div>
+
+</section>
+
+<section id="courses">
+
+<h2 class="section-title">Course Finder</h2>
+
+<div class="search-box">
+
+<input
+    type="text"
+    id="studentName"
+    placeholder="Enter your name"
+>
+
+<select id="course">
+    <option value="">Choose a course</option>
+    <option value="IT">Information Technology / CS</option>
+    <option value="Business">Business / Accounting</option>
+    <option value="Engineering">Engineering</option>
+    <option value="Education">Teacher Education</option>
+    <option value="Agriculture">Agriculture</option>
+</select>
+
+<button onclick="findCourse()">Find Colleges</button>
+
+<p id="result"></p>
+
+</div>
+
+</section>
+
+<section id="favorites">
+
+<h2 class="section-title">My Favorite Colleges</h2>
+
+<div id="favoriteList"></div>
+
+</section>
+
+<section id="about">
+
+<h2 class="section-title">About Hanap College</h2>
+
+<div class="about-grid">
+
+<div class="about-card">
+    <h3>Easy Search</h3>
+    <p>Find colleges based on your preferred course and location.</p>
+</div>
+
+<div class="about-card">
+    <h3>Compare Tuition</h3>
+    <p>Check estimated tuition information before choosing a school.</p>
+</div>
+
+<div class="about-card">
+    <h3>Compare Schools</h3>
+    <p>Save your favorite schools and compare your options.</p>
+</div>
+
+<div class="about-card">
+    <h3>Mobile Friendly</h3>
+    <p>Use Hanap College on phones, tablets, and computers.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="contact">
+
+<h2 class="section-title">Contact Us</h2>
+
+<div class="search-box">
+
+<form onsubmit="sendMessage(event)">
+
+<input
+    type="text"
+    id="contactName"
+    placeholder="Your Name"
+    required
+>
+
+<input
+    type="email"
+    id="contactEmail"
+    placeholder="Your Email"
+    required
+>
+
+<textarea
+    id="contactMessage"
+    placeholder="Your message..."
+    required
+></textarea>
+
+<button type="submit">Send Message</button>
+
+</form>
+
+<p id="contactResult"></p>
+
+</div>
+
+</section>
+
+</div>
+
+<div class="compare-bar" id="compareBar">
+
+<span id="compareText">0 colleges selected</span>
+
+<button onclick="compareColleges()">Compare</button>
+
+<button onclick="clearCompare()">Clear</button>
+
+</div>
+
+<div class="modal" id="collegeModal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeModal()">&times;</span>
+
+<div id="modalBody"></div>
+
+</div>
+
+</div>
+
+<div class="modal" id="loginModal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeLogin()">&times;</span>
+
+<div class="login-box">
+
+<h2>Student Account</h2>
+
+<input
+    type="text"
+    id="loginName"
+    placeholder="Enter your name"
+>
+
+<input
+    type="email"
+    id="loginEmail"
+    placeholder="Enter your email"
+>
+
+<button onclick="login()">Login / Register</button>
+
+<p id="loginResult"></p>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+<h3>Hanap College</h3>
+
+<p>Helping students find the right college.</p>
+
+<p>
+© 2026 Hanap College. All rights reserved.
+</p>
+
+</footer>
+
+<script>
+const colleges = [
+
+{
+id:1,
+name:"First City Providential College (FCPC)",
+location:"San Jose del Monte, Bulacan",
+courses:["IT","Business","Education"],
+tuition:18000,
+tuitionText:"₱18,000 per semester",
+rating:4.3,
+students:1200,
+image:"FCPC BG.jpg",
+logo:"FCPC LOGO.jpg",
+website:"https://fcpc01.wordpress.com/admission/",
+info:"Private institution in San Jose del Monte known for Teacher Education, IT, and Business programs."
+},
+
+{
+id:2,
+name:"La Conception College (LCC)",
+location:"San Jose del Monte, Bulacan",
+courses:["IT","Business","Education"],
+tuition:16000,
+tuitionText:"₱16,000 per semester",
+rating:4.1,
+students:900,
+image:"LCC BG.jpg",
+logo:"LCC LOGO.jpg",
+website:"https://laconcepcioncollege.com/",
+info:"Offers affordable tertiary programs with a strong focus on community development."
+},
+
+{
+id:3,
+name:"Bestlink College of the Philippines (BCP)",
+location:"Bulacan / Novaliches",
+courses:["IT","Engineering","Business","Education"],
+tuition:15000,
+tuitionText:"₱15,000 per semester",
+rating:4.4,
+students:5000,
+image:"BCP BG.jpg",
+logo:"BCP LOGO.jpg",
+website:"https://bcp.edu.ph/",
+info:"Known for accessible vocational and degree programs across multiple campuses."
+},
+
+{
+id:4,
+name:"National Teachers College (NTC)",
+location:"Manila",
+courses:["Education","Business","IT"],
+tuition:22000,
+tuitionText:"₱22,000 per semester",
+rating:4.2,
+students:4000,
+image:"NTC BG.jpg",
+logo:"NTC LOGO.png",
+website:"https://ntc.edu.ph/",
+info:"A historic institution focused on teacher training and liberal education."
+},
+
+{
+id:5,
+name:"Bulacan Agricultural State College (BASC)",
+location:"San Ildefonso, Bulacan",
+courses:["Agriculture","Education","IT","Engineering"],
+tuition:0,
+tuitionText:"Free Tuition (State College)",
+rating:4.5,
+students:3000,
+image:"BASC BG.jpg",
+logo:"BASC LOGO.jpg",
+website:"https://basc.edu.ph/",
+info:"State institution focused on agriculture, forestry, technology and allied fields."
+},
+
+{
+id:6,
+name:"Bulacan Polytechnic College (BPC)",
+location:"Malolos, Bulacan",
+courses:["IT","Business","Engineering"],
+tuition:5000,
+tuitionText:"₱5,000 per semester",
+rating:4.0,
+students:1500,
+image:"BPC BG.jpg",
+logo:"BPC LOGO.jpg",
+website:"https://bulacan.gov.ph/government/offices/bpc/",
+info:"Provincially funded polytechnic institution emphasizing technical and hands-on training."
+},
+
+{
+id:7,
+name:"College de San Gabriel Arcangel (CDSGA)",
+location:"San Jose del Monte, Bulacan",
+courses:["IT","Business","Education"],
+tuition:14000,
+tuitionText:"₱14,000 per semester",
+rating:4.1,
+students:1000,
+image:"CDSGA BG.jpg",
+logo:"CDSGA LOGO.jpg",
+website:"https://www.cdsga-system.com/website/site/campuses.php",
+info:"Private college offering values-centered undergraduate degree programs."
+},
+
+{
+id:8,
+name:"City College of San Jose Del Monte (CCSJDM)",
+location:"San Jose del Monte, Bulacan",
+courses:["IT","Business","Education"],
+tuition:0,
+tuitionText:"Free Tuition (Local Institution)",
+rating:4.6,
+students:2000,
+image:"CCSJDM bg.jpg",
+logo:"CCSJDM logo.jpg",
+website:"https://info.ccsjdm.com",
+info:"Local government-supported institution providing higher education opportunities."
+},
+
+{
+id:9,
+name:"National College of Business and Arts (NCBA)",
+location:"Fairview / Taytay",
+courses:["Business","IT","Education"],
+tuition:20000,
+tuitionText:"₱20,000 per semester",
+rating:4.0,
+students:1800,
+image:"NCBA bg.jpg",
+logo:"NCBA logo.png",
+website:"https://ncba.edu.ph/",
+info:"Specializes in business administration, accountancy and information technology."
+},
+
+{
+id:10,
+name:"Colegio San Agustin (CSA)",
+location:"Bulacan / San Jose del Monte",
+courses:["Business","IT","Engineering","Education"],
+tuition:25000,
+tuitionText:"₱25,000 per semester",
+rating:4.3,
+students:2500,
+image:"CSA bg.jpg",
+logo:"CSA logo.jpg",
+website:"https://csa.edu.ph/",
+info:"Catholic institution committed to academic excellence and holistic development."
+}
+
+];
+
+let favorites =
+JSON.parse(localStorage.getItem("hanapFavorites")) || [];
+
+let compare =
+JSON.parse(localStorage.getItem("hanapCompare")) || [];
+
+function renderColleges(list, target="collegeList") {
+
+const container = document.getElementById(target);
+
+container.innerHTML = "";
+
+if(list.length === 0) {
+
+container.innerHTML =
+"<div class='search-box'><h3>No colleges found</h3><p>Try changing your filters.</p></div>";
+
+return;
+}
+
+list.forEach(college => {
+
+const isFavorite = favorites.includes(college.id);
+
+const isCompare = compare.includes(college.id);
+
+const stars = college.rating + "/5";
+
+let image = college.image
+? `<img src="${college.image}" alt="${college.name}"
+onerror="this.style.display='none';this.nextElementSibling.style.display='block';">`
+: "";
+
+let logoHtml = college.logo
+? `<img src="${college.logo}" alt="${college.name} Logo" class="college-logo">`
+: "";
+
+container.innerHTML += `
+
+<div class="college">
+
+<div class="college-img">
+
+${image}
+
+<div class="placeholder"
+style="${college.image ? "display:none" : ""}">
+${college.name}
+</div>
+
+</div>
+
+<div class="college-info">
+
+<div class="college-header">
+${logoHtml}
+<h3>${college.name}</h3>
+</div>
+
+<p><strong>Location:</strong> ${college.location}</p>
+
+<p><strong>Tuition:</strong> ${college.tuitionText}</p>
+
+<p class="rating">
+Rating: ${stars}
+</p>
+
+<p>${college.students.toLocaleString()}+ students</p>
+
+<div class="tags">
+
+${college.courses.map(c =>
+`<span class="tag">${courseName(c)}</span>`
+).join("")}
+
+</div>
+
+<p>${college.info}</p>
+
+<div class="card-actions">
+
+<button onclick="showDetails(${college.id})">
+Details
+</button>
+
+<a class="btn"
+href="${college.website}"
+target="_blank">
+Website
+</a>
+
+<button
+class="favorite ${isFavorite ? "active" : ""}"
+onclick="toggleFavorite(${college.id})">
+
+${isFavorite ? "Remove" : "Favorite"}
+
+</button>
+
+<button
+onclick="toggleCompare(${college.id})">
+
+${isCompare ? "Selected" : "Compare"}
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+`;
+
+});
+
+}
+
+function courseName(course) {
+
+const names = {
+
+IT:"IT / CS",
+
+Business:"Business",
+
+Engineering:"Engineering",
+
+Education:"Education",
+
+Agriculture:"Agriculture"
+
+};
+
+return names[course] || course;
+
+}
+
+function applyFilters() {
+
+let search =
+document.getElementById("searchInput").value.toLowerCase();
+
+let course =
+document.getElementById("courseFilter").value;
+
+let location =
+document.getElementById("locationFilter").value;
+
+let tuition =
+document.getElementById("tuitionFilter").value;
+
+let sort =
+document.getElementById("sortFilter").value;
+
+let filtered = colleges.filter(c => {
+
+let matchesSearch =
+c.name.toLowerCase().includes(search) ||
+c.location.toLowerCase().includes(search);
+
+let matchesCourse =
+!course || c.courses.includes(course);
+
+let matchesLocation =
+!location || c.location.includes(location);
+
+let matchesTuition = true;
+
+if(tuition === "free")
+matchesTuition = c.tuition === 0;
+
+if(tuition === "low")
+matchesTuition = c.tuition > 0 && c.tuition <= 10000;
+
+if(tuition === "medium")
+matchesTuition = c.tuition > 10000 && c.tuition <= 20000;
+
+if(tuition === "high")
+matchesTuition = c.tuition > 20000;
+
+return matchesSearch &&
+matchesCourse &&
+matchesLocation &&
+matchesTuition;
+
+});
+
+if(sort === "rating")
+filtered.sort((a,b) => b.rating - a.rating);
+
+if(sort === "tuitionLow")
+filtered.sort((a,b) => a.tuition - b.tuition);
+
+if(sort === "name")
+filtered.sort((a,b) => a.name.localeCompare(b.name));
+
+renderColleges(filtered);
+
+}
+
+function resetFilters() {
+
+document.getElementById("searchInput").value="";
+document.getElementById("courseFilter").value="";
+document.getElementById("locationFilter").value="";
+document.getElementById("tuitionFilter").value="";
+document.getElementById("sortFilter").value="";
+
+renderColleges(colleges);
+
+}
+
+function findCourse() {
+
+const name =
+document.getElementById("studentName").value.trim();
+
+const course =
+document.getElementById("course").value;
+
+const result =
+document.getElementById("result");
+
+if(!name || !course) {
+
+result.innerHTML =
+"Please enter your name and choose a course.";
+
+return;
+
+}
+
+const matches =
+colleges.filter(c => c.courses.includes(course));
+
+result.innerHTML =
+`Hello <strong>${name}</strong>!
+Here are colleges offering <strong>${courseName(course)}</strong>.`;
+
+renderColleges(matches);
+
+document.getElementById("colleges")
+.scrollIntoView();
+
+}
+
+function toggleFavorite(id) {
+
+if(favorites.includes(id)) {
+
+favorites =
+favorites.filter(x => x !== id);
+
+} else {
+
+favorites.push(id);
+
+}
+
+localStorage.setItem(
+"hanapFavorites",
+JSON.stringify(favorites)
+);
+
+renderColleges(colleges);
+
+renderFavorites();
+
+}
+
+function renderFavorites() {
+
+const favoriteColleges =
+colleges.filter(c => favorites.includes(c.id));
+
+renderColleges(favoriteColleges,"favoriteList");
+
+}
+
+function toggleCompare(id) {
+
+if(compare.includes(id)) {
+
+compare =
+compare.filter(x => x !== id);
+
+} else {
+
+if(compare.length >= 3) {
+
+alert("You can compare up to 3 colleges.");
+
+return;
+
+}
+
+compare.push(id);
+
+}
+
+localStorage.setItem(
+"hanapCompare",
+JSON.stringify(compare)
+);
+
+updateCompareBar();
+
+renderColleges(colleges);
+
+}
+
+function updateCompareBar() {
+
+const bar =
+document.getElementById("compareBar");
+
+const text =
+document.getElementById("compareText");
+
+if(compare.length === 0) {
+
+bar.style.display="none";
+
+} else {
+
+bar.style.display="block";
+
+text.textContent =
+`${compare.length} college(s) selected`;
+
+}
+
+}
+
+function clearCompare() {
+
+compare=[];
+
+localStorage.setItem(
+"hanapCompare",
+JSON.stringify(compare)
+);
+
+updateCompareBar();
+
+renderColleges(colleges);
+
+}
+
+function compareColleges() {
+
+if(compare.length < 2) {
+
+alert("Select at least 2 colleges to compare.");
+
+return;
+
+}
+
+const selected =
+colleges.filter(c => compare.includes(c.id));
+
+let html = `
+<h2>College Comparison</h2>
+
+<table style="width:100%;border-collapse:collapse;">
+
+<tr>
+<th style="padding:10px;border:1px solid #ccc;">
+Feature
+</th>
+${selected.map(c =>
+`<th style="padding:10px;border:1px solid #ccc;">
+${c.name}
+</th>`).join("")}
+</tr>
+
+<tr>
+<td style="padding:10px;border:1px solid #ccc;">
+Location
+</td>
+${selected.map(c =>
+`<td style="padding:10px;border:1px solid #ccc;">
+${c.location}
+</td>`).join("")}
+</tr>
+
+<tr>
+<td style="padding:10px;border:1px solid #ccc;">
+Tuition
+</td>
+${selected.map(c =>
+`<td style="padding:10px;border:1px solid #ccc;">
+${c.tuitionText}
+</td>`).join("")}
+</tr>
+
+<tr>
+<td style="padding:10px;border:1px solid #ccc;">
+Rating
+</td>
+${selected.map(c =>
+`<td style="padding:10px;border:1px solid #ccc;">
+${c.rating}/5
+</td>`).join("")}
+</tr>
+
+<tr>
+<td style="padding:10px;border:1px solid #ccc;">
+Courses
+</td>
+${selected.map(c =>
+`<td style="padding:10px;border:1px solid #ccc;">
+${c.courses.map(courseName).join(", ")}
+</td>`).join("")}
+</tr>
+
+</table>
+`;
+
+openModal(html);
+
+}
+
+function showDetails(id) {
+
+const c =
+colleges.find(x => x.id === id);
+
+const stars = c.rating + "/5";
+
+const html = `
+
+<h2>${c.name}</h2>
+
+<hr>
+
+<p><strong>Location:</strong> ${c.location}</p>
+
+<p><strong>Estimated Tuition:</strong>
+${c.tuitionText}</p>
+
+<p><strong>Rating:</strong>
+${stars}</p>
+
+<p><strong>Students:</strong>
+${c.students.toLocaleString()}+</p>
+
+<h3>Courses Offered</h3>
+
+<ul>
+
+${c.courses.map(c =>
+`<li>${courseName(c)}</li>`
+).join("")}
+
+</ul>
+
+<h3>About the College</h3>
+
+<p>${c.info}</p>
+
+<a
+href="${c.website}"
+target="_blank"
+class="btn">
+
+Visit Official Website
+
+</a>
+
+`;
+
+openModal(html);
+
+}
+
+function openModal(content) {
+
+document.getElementById("modalBody").innerHTML =
+content;
+
+document.getElementById("collegeModal").style.display =
+"block";
+
+}
+
+function closeModal() {
+
+document.getElementById("collegeModal").style.display =
+"none";
+
+}
+
+function toggleDarkMode() {
+
+document.body.classList.toggle("dark");
+
+localStorage.setItem(
+"hanapDark",
+document.body.classList.contains("dark")
+);
+
+}
+
+if(localStorage.getItem("hanapDark") === "true") {
+
+document.body.classList.add("dark");
+
+}
+
+function openLogin() {
+
+document.getElementById("loginModal").style.display =
+"block";
+
+}
+
+function closeLogin() {
+
+document.getElementById("loginModal").style.display =
+"none";
+
+}
+
+function login() {
+
+const name =
+document.getElementById("loginName").value.trim();
+
+const email =
+document.getElementById("loginEmail").value.trim();
+
+const result =
+document.getElementById("loginResult");
+
+if(!name || !email) {
+
+result.innerHTML =
+"Please enter your name and email.";
+
+return;
+
+}
+
+localStorage.setItem(
+"hanapUser",
+JSON.stringify({
+name:name,
+email:email
+})
+);
+
+result.innerHTML =
+`Welcome, <strong>${name}</strong>!`;
+
+}
+
+function sendMessage(event) {
+
+event.preventDefault();
+
+const name =
+document.getElementById("contactName").value;
+
+const result =
+document.getElementById("contactResult");
+
+result.innerHTML =
+`Thank you, <strong>${name}</strong>!
+Your message has been received.`;
+
+event.target.reset();
+
+}
+
+window.onclick = function(event) {
+
+if(event.target ===
+document.getElementById("collegeModal")) {
+
+closeModal();
+
+}
+
+if(event.target ===
+document.getElementById("loginModal")) {
+
+closeLogin();
+
+}
+
+};
+
+renderColleges(colleges);
+
+renderFavorites();
+
+updateCompareBar();
+
+</script>
+
+</body>
+</html>
